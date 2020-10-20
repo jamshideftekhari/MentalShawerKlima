@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace ModelLib.Models
@@ -20,8 +21,13 @@ namespace ModelLib.Models
             Pressure = pressure;
         }
 
-
+        /// <summary>
+        /// Key så SensorDataModel kan bruges i inMemoryDB
+        /// </summary>
+        [Key]
         public int SensorID { get; set; }
+
+
         public string RoomID { get; set; }
         public float Temperature { get; set; }
         public int Humidity { get; set; }

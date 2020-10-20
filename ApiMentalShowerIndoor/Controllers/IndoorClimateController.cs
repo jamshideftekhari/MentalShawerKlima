@@ -2,68 +2,113 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ApiMentalShowerIndoor;
 using ModelLib.Models;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ApiMentalShowerIndoor.Controllers
 {
+    /// <summary>
+    /// Rest api med inmemoryDB
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class IndoorClimateController : ControllerBase
     {
-        public static List<SensorDataModel> data = new List<SensorDataModel>()
-            {
-                new SensorDataModel(1, "d-5", 25.5F, 35, 35, 35),
-                new SensorDataModel(2, "d-6", 20.2F, 40, 40, 40),
-                new SensorDataModel(3, "d-7", 15.4F, 45, 45, 45),
-                new SensorDataModel(4, "d-8", 12.7F, 50, 50, 50),
-                new SensorDataModel(5, "d-9", 29.9F, 55, 55, 55)
-            };
-        // GET: api/<IndoorClimateController>
+        private readonly FanContext _context;
+
+        public IndoorClimateController(FanContext context)
+        {
+            _context = context;
+        }
+
+        // GET: api/SensorDataModels
         [HttpGet]
-        public IEnumerable<SensorDataModel> Get()
+        public async Task<ActionResult<IEnumerable<SensorDataModel>>> Get()
         {
-            return data;
+            return await _context.Fans.ToListAsync();
         }
 
-        // GET api/<IndoorClimateController>/5
+        // GET: api/SensorDataModels/5
         [HttpGet("{id}")]
-        public SensorDataModel Get(int id)
+        public async Task<ActionResult<SensorDataModel>> Get(int id)
         {
-            return data.Find(i => i.SensorID == id);
-        }
+            var sensorDataModel = await _context.Fans.FindAsync(id);
 
-        // POST api/<IndoorClimateController>
-        [HttpPost]
-        public void Post([FromBody] SensorDataModel value)
-        {
-            data.Add(value);
-        }
-
-        // PUT api/<IndoorClimateController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] SensorDataModel value)
-        {
-            SensorDataModel item = Get(id);
-            if(item != null) 
+            if (sensorDataModel == null)
             {
-                item.SensorID = value.SensorID;
-                item.RoomID = value.RoomID;
-                item.Temperature = value.Temperature;
-                item.Humidity = value.Humidity;
-                item.CO2 = value.CO2;
-                item.Pressure = value.Pressure;
-                    
+                return NotFound();
             }
+
+            return sensorDataModel;
         }
 
-        // DELETE api/<IndoorClimateController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // PUT: api/SensorDataModels/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutSensorDataModel(int id, SensorDataModel sensorDataModel)
         {
-            data.Remove(Get(id));
+            if (id != sensorDataModel.SensorID)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(sensorDataModel).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!SensorDataModelExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
+
+        // POST: api/SensorDataModels
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPost]
+        public async Task<ActionResult<SensorDataModel>> PostSensorDataModel(SensorDataModel sensorDataModel)
+        {
+            _context.Fans.Add(sensorDataModel);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("Get", new { id = sensorDataModel.SensorID }, sensorDataModel);
+        }
+
+        // DELETE: api/SensorDataModels/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<SensorDataModel>> DeleteSensorDataModel(int id)
+        {
+            var sensorDataModel = await _context.Fans.FindAsync(id);
+            if (sensorDataModel == null)
+            {
+                return NotFound();
+            }
+
+            _context.Fans.Remove(sensorDataModel);
+            await _context.SaveChangesAsync();
+
+            return sensorDataModel;
+        }
+
+        private bool SensorDataModelExists(int id)
+        {
+            return _context.Fans.Any(e => e.SensorID == id);
+        }
+
     }
 }
