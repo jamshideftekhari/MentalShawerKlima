@@ -1,5 +1,4 @@
-﻿using ApiMentalShowerIndoor.Controllers;
-using System;
+﻿using System;
 
 namespace MentalShowerConsumer
 {
