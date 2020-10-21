@@ -4,15 +4,18 @@ import axios, {
 } from "../../node_modules/axios/index"
 
 
-interface IToDo {
-    "userId": number,
-    "id": number,
-    "title": string,
-    "completed": boolean
+interface IFan {
+    "SensorID": number,
+    "RoomID": string,
+    "Temperature": number,
+    "Humidity": number,
+    "CO2": number,
+    "Presure": number
 }
 
 //localhost temporary
-let baseUrl = 'https://apimentalshowerindoor.azurewebsites.net/api/indoorclimate';
+let baseUrl2 = 'https://apimentalshowerindoor.azurewebsites.net/api/indoorclimate';
+let baseUrl = 'http://jsonplaceholder.typicode.com/todos';
 
 new Vue({
     // TypeScript compiler complains about Vue because the CDN link to Vue is in the html file.
@@ -20,11 +23,16 @@ new Vue({
     // which is included at the bottom of the html file.
     el: "#app",
     data: {
+        toDos: [],
         humidity: 0
     },
     methods: {
+        async getAllToDos() {
+            let response = await this.getAllToDosAsync();
+            this.toDos = response.data;
+        },
         async getAllToDosAsync() {
-            try { return axios.get<IToDo[]>(baseUrl) }
+            try { return axios.get<IFan[]>(baseUrl2) }
             catch (error: AxiosError) {
                 this.message = error.message;
                 alert(error.message)

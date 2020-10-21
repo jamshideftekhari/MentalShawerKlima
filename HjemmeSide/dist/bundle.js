@@ -2106,21 +2106,37 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 };
 
 //localhost temporary
-var baseUrl = 'https://apimentalshowerindoor.azurewebsites.net/api/indoorclimate';
+var baseUrl2 = 'https://apimentalshowerindoor.azurewebsites.net/api/indoorclimate';
+var baseUrl = 'http://jsonplaceholder.typicode.com/todos';
 new Vue({
     // TypeScript compiler complains about Vue because the CDN link to Vue is in the html file.
     // Before the application runs this TypeScript file will be compiled into bundle.js
     // which is included at the bottom of the html file.
     el: "#app",
     data: {
+        toDos: [],
         humidity: 0
     },
     methods: {
+        getAllToDos: function () {
+            return __awaiter(this, void 0, void 0, function () {
+                var response;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, this.getAllToDosAsync()];
+                        case 1:
+                            response = _a.sent();
+                            this.toDos = response.data;
+                            return [2 /*return*/];
+                    }
+                });
+            });
+        },
         getAllToDosAsync: function () {
             return __awaiter(this, void 0, void 0, function () {
                 return __generator(this, function (_a) {
                     try {
-                        return [2 /*return*/, _node_modules_axios_index__WEBPACK_IMPORTED_MODULE_0___default.a.get(baseUrl)];
+                        return [2 /*return*/, _node_modules_axios_index__WEBPACK_IMPORTED_MODULE_0___default.a.get(baseUrl2)];
                     }
                     catch (error) {
                         this.message = error.message;
