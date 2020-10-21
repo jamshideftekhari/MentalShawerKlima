@@ -18,7 +18,6 @@
       </div>
       <div class="panel-body">
         <button class="btn btn-primary" v-on:click="getAllToDos()">Get Todos</button>
-        <button class="btn btn-warning" v-on:click="clearList">Clear</button><br/>
         <ul v-if="toDos.length > 0">
           <li v-for="fan in toDos">
             SensorID: {{fan.SensorID}} RoomID: {{fan.RoomID}} Temperature: {{fan.Temperature}} Humidity: {{fan.Humidity}} CO2: {{fan.CO2}} Pressure: {{fan.Pressure}}
