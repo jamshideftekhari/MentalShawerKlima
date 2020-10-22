@@ -25,7 +25,8 @@ new Vue({
     el: "#app",
     data: {
         fans: [],
-        fan: {}
+        fan: {},
+        sensorId: "1" 
     },
     methods: {
         async getAllFans() {
@@ -39,14 +40,23 @@ new Vue({
                 this.message = error.message;
                 alert(error.message)
             }
+        },
+        async getFanAsync(){
+            try {
+                return await axios.get<IFan>(baseUrl + "/" + this.sensorId, {headers: {"Access-Control-Allow-Origin": "*","Access-Control-Allow-Methods" : "GET,PUT,POST,DELETE,PATCH,OPTIONS","Access-Control-Allow-Credentials": "true"} } )
+            }
+            catch ( error: AxiosError){
+                this.message = error.message;
+                alert(error.message)
+            }
         }
     }
-    // ,
-    // computed:{
-    //     fan : function() {
-    //         return this.getAllToDos()[0];
-    //     }
-    // }
+    ,
+    computed:{
+        fanComputed : function() {
+            return this.getFanAsync();
+        }
+    }
 })
 
 

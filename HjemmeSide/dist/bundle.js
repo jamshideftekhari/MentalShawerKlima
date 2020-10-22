@@ -2080,7 +2080,8 @@ new Vue({
     el: "#app",
     data: {
         fans: [],
-        fan: {}
+        fan: {},
+        sensorId: "1"
     },
     methods: {
         async getAllFans() {
@@ -2096,14 +2097,22 @@ new Vue({
                 this.message = error.message;
                 alert(error.message);
             }
+        },
+        async getFanAsync() {
+            try {
+                return await _node_modules_axios_index__WEBPACK_IMPORTED_MODULE_0___default.a.get(baseUrl + "/" + this.sensorId, { headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS", "Access-Control-Allow-Credentials": "true" } });
+            }
+            catch (error) {
+                this.message = error.message;
+                alert(error.message);
+            }
+        }
+    },
+    computed: {
+        fanComputed: function () {
+            return this.getFanAsync();
         }
     }
-    // ,
-    // computed:{
-    //     fan : function() {
-    //         return this.getAllToDos()[0];
-    //     }
-    // }
 });
 
 
