@@ -25,6 +25,10 @@ namespace ApiMentalShowerIndoor.Controllers
         }
 
         // GET: api/SensorDataModels
+        /// <summary>
+        /// Get all data readings 
+        /// </summary>
+        /// <returns>A list of data readings</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SensorDataModel>>> Get()
         {
@@ -32,6 +36,11 @@ namespace ApiMentalShowerIndoor.Controllers
         }
 
         // GET: api/SensorDataModels/5
+        /// <summary>
+        /// Get a specific data reading from ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>A SensorDateModel object</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<SensorDataModel>> Get(int id)
         {
@@ -109,6 +118,5 @@ namespace ApiMentalShowerIndoor.Controllers
         {
             return _context.Fans.Any(e => e.SensorID == id);
         }
-
     }
 }
