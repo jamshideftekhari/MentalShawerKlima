@@ -34,39 +34,21 @@ new Vue({
           }
     },
     methods: {
-        async getAllFans() {
-            let response = await this.getAllFansAsync();
-            this.fans = response.data;
-            this.fan = response.data[response.data.length - 1];
-        },
-        async getAllFansAsync() {
-            try { return axios.get<IFan[]>(baseUrl, {headers: {"Access-Control-Allow-Origin": "*","Access-Control-Allow-Methods" : "GET,PUT,POST,DELETE,PATCH,OPTIONS","Access-Control-Allow-Credentials": "true"} } ) }
-            catch (error: AxiosError) {
-                this.message = error.message;
-                alert(error.message)
-            }
-        }
-        ,
         async getFanAsync(){
             try {
-                let response = await axios.get<IFan>(baseUrl + "/" + this.sensorId, {headers: {"Access-Control-Allow-Origin": "*","Access-Control-Allow-Methods" : "GET,PUT,POST,DELETE,PATCH,OPTIONS","Access-Control-Allow-Credentials": "true"} } ).then();
-                console.log(response.data);
-                
-                return response.data.humidity;
+                axios.get<IFan>(baseUrl + "/" + this.sensorId, {headers: {"Access-Control-Allow-Origin": "*","Access-Control-Allow-Methods" : "GET,PUT,POST,DELETE,PATCH,OPTIONS","Access-Control-Allow-Credentials": "true"} } )
+                .then(result => {console.log(result.data);this.fan = result.data;})
+                .catch(error => {return {"humidity": 0}});
             }
             catch ( error: AxiosError){
                 this.message = error.message;
-                alert(error.message)
+                alert(error.message);
             }
-            return 0;
         }
-    }
-    ,
-    computed:{
-        fanComputed : function() {
-            return this.getFanAsync();
-        }
+    },
+    created() {
+        this.getFanAsync();
+        this.interval = setInterval(() => this.getFanAsync(), 2000);
     }
 })
-
 
