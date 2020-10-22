@@ -12,7 +12,7 @@ namespace MentalShowerConsumer
 {
     public class Worker
     {
-        string URI = "https://localhost:44367/api/IndoorClimate";
+        string URI = "https://apimentalshowerindoor.azurewebsites.net/api/indoorclimate";
         public void Start()
         {
             PostAsync(new SensorDataModel(1, "D3.05", 20, 30, 45, 2));
