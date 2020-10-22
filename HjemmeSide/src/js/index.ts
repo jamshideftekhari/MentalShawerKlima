@@ -2,20 +2,21 @@ import axios, {
     AxiosResponse,
     AxiosError
 } from "../../node_modules/axios/index"
+axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded'
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
 
 interface IFan {
-    "SensorID": number,
-    "RoomID": string,
-    "Temperature": number,
-    "Humidity": number,
-    "CO2": number,
-    "Presure": number
+    "sensorID": number,
+    "roomID": string,
+    "temperature": number,
+    "humidity": number,
+    "cO2": number,
+    "pressure": number
 }
 
 //localhost temporary
-let baseUrl2 = 'https://apimentalshowerindoor.azurewebsites.net/api/indoorclimate';
-let baseUrl = 'http://jsonplaceholder.typicode.com/todos';
+let baseUrl = 'https://apimentalshowerindoor.azurewebsites.net/api/indoorclimate';
 
 new Vue({
     // TypeScript compiler complains about Vue because the CDN link to Vue is in the html file.
@@ -23,23 +24,29 @@ new Vue({
     // which is included at the bottom of the html file.
     el: "#app",
     data: {
-        toDos: [],
-        humidity: 0
+        fans: [],
+        fan: {}
     },
     methods: {
-        async getAllToDos() {
-            let response = await this.getAllToDosAsync();
-            this.toDos = response.data;
+        async getAllFans() {
+            let response = await this.getAllFansAsync();
+            this.fans = response.data;
+            this.fan = response.data[response.data.length - 1];
         },
-        async getAllToDosAsync() {
-            try { return axios.get<IFan[]>(baseUrl2) }
+        async getAllFansAsync() {
+            try { return axios.get<IFan[]>(baseUrl, {headers: {"Access-Control-Allow-Origin": "*","Access-Control-Allow-Methods" : "GET,PUT,POST,DELETE,PATCH,OPTIONS","Access-Control-Allow-Credentials": "true"} } ) }
             catch (error: AxiosError) {
                 this.message = error.message;
                 alert(error.message)
             }
         }
-
     }
+    // ,
+    // computed:{
+    //     fan : function() {
+    //         return this.getAllToDos()[0];
+    //     }
+    // }
 })
 
 
