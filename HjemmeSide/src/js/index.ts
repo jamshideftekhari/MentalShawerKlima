@@ -25,7 +25,7 @@ new Vue({
     el: "#app",
     data: {
         fans: [],
-        fan: {},
+        fan: {"humidity": 0},
         sensorId: "1",
         styleObject: {
             background: 'red',
@@ -45,15 +45,20 @@ new Vue({
                 this.message = error.message;
                 alert(error.message)
             }
-        },
+        }
+        ,
         async getFanAsync(){
             try {
-                return await axios.get<IFan>(baseUrl + "/" + this.sensorId, {headers: {"Access-Control-Allow-Origin": "*","Access-Control-Allow-Methods" : "GET,PUT,POST,DELETE,PATCH,OPTIONS","Access-Control-Allow-Credentials": "true"} } )
+                let response = await axios.get<IFan>(baseUrl + "/" + this.sensorId, {headers: {"Access-Control-Allow-Origin": "*","Access-Control-Allow-Methods" : "GET,PUT,POST,DELETE,PATCH,OPTIONS","Access-Control-Allow-Credentials": "true"} } ).then();
+                console.log(response.data);
+                
+                return response.data.humidity;
             }
             catch ( error: AxiosError){
                 this.message = error.message;
                 alert(error.message)
             }
+            return 0;
         }
     }
     ,

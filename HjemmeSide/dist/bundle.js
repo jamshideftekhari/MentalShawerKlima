@@ -2080,8 +2080,13 @@ new Vue({
     el: "#app",
     data: {
         fans: [],
-        fan: {},
-        sensorId: "1"
+        fan: { "humidity": 0 },
+        sensorId: "1",
+        styleObject: {
+            background: 'red',
+            color: 'white',
+            fontSize: '20px'
+        }
     },
     methods: {
         async getAllFans() {
@@ -2100,12 +2105,15 @@ new Vue({
         },
         async getFanAsync() {
             try {
-                return await _node_modules_axios_index__WEBPACK_IMPORTED_MODULE_0___default.a.get(baseUrl + "/" + this.sensorId, { headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS", "Access-Control-Allow-Credentials": "true" } });
+                let response = await _node_modules_axios_index__WEBPACK_IMPORTED_MODULE_0___default.a.get(baseUrl + "/" + this.sensorId, { headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS", "Access-Control-Allow-Credentials": "true" } }).then();
+                console.log(response.data);
+                return response.data.humidity;
             }
             catch (error) {
                 this.message = error.message;
                 alert(error.message);
             }
+            return 0;
         }
     },
     computed: {

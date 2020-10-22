@@ -14,7 +14,11 @@
     <div id="app" class="container">
       <div class="jumbotron">
         <h1>Current humidity:</h1>
-        <h3 >{{ fan.humidity }}</h3>
+        <h3 >{{ fanComputed }}</h3>
+        <div :style="styleObject">
+          <p v-if="fan.humidity > 40">Det anbefalede fugtniveau er for højt</p>
+          <p v-if="fan.humidity < 10">Det anbefalede fugtniveau er for lavt</p>
+        </div>
       </div>
       <div class="panel-body">
         <button class="btn btn-primary" v-on:click="getAllFans()">Get humidity</button>
