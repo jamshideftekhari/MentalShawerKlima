@@ -26,7 +26,12 @@ new Vue({
     data: {
         fans: [],
         fan: {},
-        sensorId: "1" 
+        sensorId: "1",
+        styleObject: {
+            background: 'red',
+            color: 'white',
+            fontSize: '20px'
+          }
     },
     methods: {
         async getAllFans() {
