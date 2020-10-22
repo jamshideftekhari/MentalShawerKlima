@@ -2089,37 +2089,22 @@ new Vue({
         }
     },
     methods: {
-        async getAllFans() {
-            let response = await this.getAllFansAsync();
-            this.fans = response.data;
-            this.fan = response.data[response.data.length - 1];
-        },
-        async getAllFansAsync() {
-            try {
-                return _node_modules_axios_index__WEBPACK_IMPORTED_MODULE_0___default.a.get(baseUrl, { headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS", "Access-Control-Allow-Credentials": "true" } });
-            }
-            catch (error) {
-                this.message = error.message;
-                alert(error.message);
-            }
-        },
         async getFanAsync() {
             try {
-                let response = await _node_modules_axios_index__WEBPACK_IMPORTED_MODULE_0___default.a.get(baseUrl + "/" + this.sensorId, { headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS", "Access-Control-Allow-Credentials": "true" } }).then();
-                console.log(response.data);
-                return response.data.humidity;
+                //get sensor with id this.sensorId
+                _node_modules_axios_index__WEBPACK_IMPORTED_MODULE_0___default.a.get(baseUrl + "/" + this.sensorId, { headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS", "Access-Control-Allow-Credentials": "true" } })
+                    .then(result => { this.fan = result.data; })
+                    .catch(error => { return { "humidity": 0 }; });
             }
             catch (error) {
                 this.message = error.message;
                 alert(error.message);
             }
-            return 0;
         }
     },
-    computed: {
-        fanComputed: function () {
-            return this.getFanAsync();
-        }
+    created() {
+        this.getFanAsync();
+        this.interval = setInterval(() => this.getFanAsync(), 2000);
     }
 });
 
