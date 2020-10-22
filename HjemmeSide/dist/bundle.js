@@ -2081,7 +2081,7 @@ new Vue({
     data: {
         fans: [],
         fan: { "humidity": 0 },
-        sensorId: "1",
+        sensorId: "2",
         styleObject: {
             background: 'red',
             color: 'white',
