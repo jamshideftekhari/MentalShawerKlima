@@ -25,6 +25,10 @@ namespace ApiMentalShowerIndoor.Controllers
         }
 
         // GET: api/SensorDataModels
+        /// <summary>
+        /// Get all data readings 
+        /// </summary>
+        /// <returns>A list of data readings</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SensorDataModel>>> Get()
         {
@@ -32,6 +36,11 @@ namespace ApiMentalShowerIndoor.Controllers
         }
 
         // GET: api/SensorDataModels/5
+        /// <summary>
+        /// Get a specific data reading from ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>A SensorDateModel object</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<SensorDataModel>> Get(int id)
         {
@@ -77,6 +86,54 @@ namespace ApiMentalShowerIndoor.Controllers
             return NoContent();
         }
 
+
+        // PUT api/
+        [HttpPut("Temp/{id}")]
+        public async Task<bool> Put(int id, [FromBody] float value)
+        {
+            bool isTempTrue = false;
+
+            List<SensorDataModel> mockList = new List<SensorDataModel>()
+            {
+                new SensorDataModel(1, "Stue", 25.12f, 30, 12, 1200),
+                new SensorDataModel(2, "Stue", 25.12f, 30, 12, 1200),
+                new SensorDataModel(3, "Stue", 25.12f, 30, 12, 1200)
+            };
+
+            SensorDataModel model = mockList.Find(m => m.SensorID == id);
+
+            while (!isTempTrue)
+            {
+                try
+                {
+
+                    if (model.Temperature > value + 2) throw new Exception("More than two degrees");
+                    if (model.Temperature < value - 2) throw new Exception("Less than two degrees");
+
+                    isTempTrue = true;
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    if (e.Message == "More than two degrees")
+                    {
+                        model.Temperature -= 0.1f;
+                    }
+
+                    if (e.Message == "Less thant two degrees")
+                    {
+                        model.Temperature += 0.1f;
+                    }
+                }
+            }
+
+
+
+            return isTempTrue;
+        }
+
+
         // POST: api/SensorDataModels
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -109,7 +166,6 @@ namespace ApiMentalShowerIndoor.Controllers
         {
             return _context.Fans.Any(e => e.SensorID == id);
         }
-
     }
 }
     
