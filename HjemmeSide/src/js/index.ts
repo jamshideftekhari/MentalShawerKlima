@@ -36,9 +36,11 @@ new Vue({
     methods: {
         async getFanAsync(){
             try {
+                //get sensor with id this.sensorId
                 axios.get<IFan>(baseUrl + "/" + this.sensorId, {headers: {"Access-Control-Allow-Origin": "*","Access-Control-Allow-Methods" : "GET,PUT,POST,DELETE,PATCH,OPTIONS","Access-Control-Allow-Credentials": "true"} } )
-                .then(result => {console.log(result.data);this.fan = result.data;})
+                .then(result => {this.fan = result.data;})
                 .catch(error => {return {"humidity": 0}});
+
             }
             catch ( error: AxiosError){
                 this.message = error.message;

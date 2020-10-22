@@ -2091,8 +2091,9 @@ new Vue({
     methods: {
         async getFanAsync() {
             try {
+                //get sensor with id this.sensorId
                 _node_modules_axios_index__WEBPACK_IMPORTED_MODULE_0___default.a.get(baseUrl + "/" + this.sensorId, { headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS", "Access-Control-Allow-Credentials": "true" } })
-                    .then(result => { console.log(result.data); this.fan = result.data; })
+                    .then(result => { this.fan = result.data; })
                     .catch(error => { return { "humidity": 0 }; });
             }
             catch (error) {
