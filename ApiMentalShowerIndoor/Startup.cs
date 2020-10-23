@@ -30,7 +30,9 @@ namespace ApiMentalShowerIndoor
         public void ConfigureServices(IServiceCollection services)
         {
             //Register the DbContext with the dependency injection container.
-            services.AddDbContext<FanContext>(opt => opt.UseInMemoryDatabase("FanList"));
+           // services.AddDbContext<FanContext>(opt => opt.UseInMemoryDatabase("FanList"));
+
+            services.AddDbContext<FanContext>(options => options.UseSqlServer(Configuration.GetConnectionString("RoomMeasureContext")));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

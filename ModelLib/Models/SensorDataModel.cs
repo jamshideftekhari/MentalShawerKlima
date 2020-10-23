@@ -26,11 +26,12 @@ namespace ModelLib.Models
         /// Key så SensorDataModel kan bruges i inMemoryDB
         /// </summary>
         [Key]
+        public int MeasurmentId { get; set; }
         public int SensorID { get; set; }
 
 
         public string RoomID { get; set; }
-        public float Temperature { get; set; }
+        public double Temperature { get; set; }
         public int Humidity { get; set; }
         public int CO2 { get; set; }
         public int Pressure { get; set; }
