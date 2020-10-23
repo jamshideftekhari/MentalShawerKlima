@@ -37,22 +37,42 @@ namespace ApiMentalShowerIndoor.Controllers
 
         // GET: api/SensorDataModels/5
         /// <summary>
-        /// Get a specific data reading from ID
+        /// Get a specific data readings from ID
         /// </summary>
         /// <param name="id"></param>
         /// <returns>A SensorDateModel object</returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<SensorDataModel>> Get(int id)
+        public async Task<ActionResult<List<SensorDataModel>>> Get(int id)
         {
-            var sensorDataModel = await _context.Fans.LastAsync(a => a.SensorID == id ); //.FindAsync(id);
+            var allData = Get().Result.Value.ToList().FindAll(a => a.SensorID == id);
 
-            if (sensorDataModel == null)
+            if (allData.Count == 0)
             {
                 return NotFound();
             }
 
-            return sensorDataModel;
+            return allData;
         }
+
+        // GET: api/SensorDataModels/5
+        /// <summary>
+        /// Get latest data reading from SensorID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>A SensorDateModel object</returns>
+        [HttpGet("/latest/{id}")]
+        public async Task<ActionResult<SensorDataModel>> GetLatest(int id)
+        {
+            var allData = Get().Result.Value.ToList().FindAll(a => a.SensorID == id);
+            var sorted = allData.ToList().OrderBy(a => a.MeasurmentId);
+            if (sorted == null)
+            {
+                return NotFound();
+            }
+
+            return sorted.Last();
+        }
+
 
         // PUT: api/SensorDataModels/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
