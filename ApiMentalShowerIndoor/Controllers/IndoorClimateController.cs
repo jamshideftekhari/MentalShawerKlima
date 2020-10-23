@@ -44,7 +44,7 @@ namespace ApiMentalShowerIndoor.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<SensorDataModel>> Get(int id)
         {
-            var sensorDataModel = await _context.Fans.FindAsync(id);
+            var sensorDataModel = await _context.Fans.LastAsync(a => a.SensorID == id ); //.FindAsync(id);
 
             if (sensorDataModel == null)
             {
