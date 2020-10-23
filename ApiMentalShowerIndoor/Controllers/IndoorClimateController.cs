@@ -65,7 +65,7 @@ namespace ApiMentalShowerIndoor.Controllers
         {
             var allData = Get().Result.Value.ToList().FindAll(a => a.SensorID == id);
             var sorted = allData.ToList().OrderBy(a => a.MeasurmentId);
-            if (sorted == null)
+            if (sorted.Count() == 0)
             {
                 return NotFound();
             }
