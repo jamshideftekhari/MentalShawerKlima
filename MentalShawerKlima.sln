@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MentalShowerConsumer", "Men
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MentalShowerUTest", "MentalShowerUTest\MentalShowerUTest.csproj", "{FE3F4DD5-AE53-41C9-A2B7-7C7E8F060C78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelLib", "ModelLib\ModelLib.csproj", "{F93A2A35-7D54-4330-91A9-E6A7D8A82DF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelLib", "ModelLib\ModelLib.csproj", "{F93A2A35-7D54-4330-91A9-E6A7D8A82DF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.IntegrationTests", "API.IntegrationTests\API.IntegrationTests.csproj", "{03DF8168-B2C2-4E02-9B08-5A88272242E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F93A2A35-7D54-4330-91A9-E6A7D8A82DF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F93A2A35-7D54-4330-91A9-E6A7D8A82DF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F93A2A35-7D54-4330-91A9-E6A7D8A82DF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03DF8168-B2C2-4E02-9B08-5A88272242E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03DF8168-B2C2-4E02-9B08-5A88272242E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03DF8168-B2C2-4E02-9B08-5A88272242E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03DF8168-B2C2-4E02-9B08-5A88272242E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
