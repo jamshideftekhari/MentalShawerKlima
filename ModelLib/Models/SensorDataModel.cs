@@ -39,7 +39,7 @@ namespace ModelLib.Models
 
         public override string ToString()
         {
-            return $"{SensorID} {RoomID} {Temperature} {Humidity} {CO2} {Pressure}";
+            return $"{SensorID} {RoomID} {Temperature} {Humidity} {CO2} {Pressure} {TimeStamp}";
         }
     }
 }
